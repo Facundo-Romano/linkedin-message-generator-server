@@ -72,11 +72,11 @@ export const buildPrompt = (
   }
 
   return `
-  Sender:
+  Remitente:
     <data>Problema que resuelve: ${senderInfo.problemSolved}</data>
     <data>Solución que ofrece: ${senderInfo.solutionOffered}</data>
     <data>Estilo de escritura del emisor: ${senderInfo.writingStyle || 'Profesional pero cercano, que muestre genuino interés y aporte valor.'}</data>
-  Recipient:
+  Destinatario:
     <data>Nombre Completo: ${recipientInfo.firstName} ${recipientInfo.lastName}</data>
     <data>Titular LinkedIn: ${recipientInfo.headline || ''}</data>
     <data>Rol Principal (Más Reciente): ${recipientInfo.recentRoleTitle || ''} en ${recipientInfo.recentRoleCompany || ''}</data>
