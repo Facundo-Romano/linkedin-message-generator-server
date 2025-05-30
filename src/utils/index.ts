@@ -66,28 +66,24 @@ export const buildPrompt = (
     if (!posts || posts.length === 0) return '';
     
     return posts.map((post, index) => `
-  * **Post Reciente #${index + 1} - Extracto:** "${post.text || ''}"
-  * **Post Reciente #${index + 1} - Tema/Artículo:** "${post.topic || ''}"${post.url ? ` (URL: ${post.url})` : ''}`).join('\n');
+      <data>Post Reciente #${index + 1} - Extracto: ${post.text || ''}</data>
+      <data>Post Reciente #${index + 1} - Tema/Artículo: ${post.topic || ''}</data>
+    `).join('\n');
   }
 
-  return `Por favor, genera 3 opciones de mensajes icebreaker para LinkedIn basados en la siguiente información:
-
-### Información del EMISOR:
-* Problema que resuelve: "${senderInfo.problemSolved}"
-* Solución que ofrece: "${senderInfo.solutionOffered}"
-* Estilo de escritura deseado por el emisor: "${senderInfo.writingStyle || 'Profesional pero cercano, que muestre genuino interés y aporte valor.'}"
-
-### Puntos Clave sobre el DESTINATARIO (${recipientInfo.firstName} ${recipientInfo.lastName}):
-
-* **Nombre Completo:** ${recipientInfo.firstName} ${recipientInfo.lastName}
-* **Titular LinkedIn:** "${recipientInfo.headline || ''}"
-* **Rol Principal (Más Reciente):** "${recipientInfo.recentRoleTitle || ''}" en "${recipientInfo.recentRoleCompany || ''}"
-* **Logro Destacado Principal:** "${recipientInfo.quantifiableAchievement || ''}"
-* **Otro Logro/Resumen Carrera:** "${recipientInfo.careerImpact || ''}"
-${formatRecentPosts(recipientInfo.recentPosts)}
-* **Habilidades Principales:** ${recipientInfo.skills?.join(', ') || ''}
-* **Reconocimientos/Estatus LinkedIn:** ${recipientInfo.linkedinStatus || ''}
-* **Educación Destacada:** "${recipientInfo.education || ''}"`;
+  return `
+  Sender:
+    <data>Problema que resuelve: ${senderInfo.problemSolved}</data>
+    <data>Solución que ofrece: ${senderInfo.solutionOffered}</data>
+    <data>Estilo de escritura del emisor: ${senderInfo.writingStyle || 'Profesional pero cercano, que muestre genuino interés y aporte valor.'}</data>
+  Recipient:
+    <data>Nombre Completo: ${recipientInfo.firstName} ${recipientInfo.lastName}</data>
+    <data>Titular LinkedIn: ${recipientInfo.headline || ''}</data>
+    <data>Rol Principal (Más Reciente): ${recipientInfo.recentRoleTitle || ''} en ${recipientInfo.recentRoleCompany || ''}</data>
+    <data>Logro Destacado Principal: ${recipientInfo.quantifiableAchievement || ''}</data>
+    <data>Otro Logro/Resumen Carrera: ${recipientInfo.careerImpact || ''}</data>
+    ${formatRecentPosts(recipientInfo.recentPosts)}
+    <data>Habilidades Principales: ${recipientInfo.skills?.join(', ') || ''}</data>`;
 }
 
 export const parseIcebreakers = (content: string): string[] =>{
